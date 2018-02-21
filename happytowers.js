@@ -2,8 +2,8 @@
 // @name         Happy Towers
 // @namespace    Happy Towers - magic
 // @version      0.3.5
-// @updateURL    https://github.com/Filtik/happytowers/happytowers.js
-// @downloadURL  https://github.com/Filtik/happytowers/happytowers.js
+// @updateURL    https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
+// @downloadURL  https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @description  try to take over the world!
 // @author       Filtik
 // @grant        none
