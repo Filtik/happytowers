@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Happy Towers
 // @namespace    Happy Towers - magic
-// @version      0.3.7
+// @version      0.3.8
 // @updateURL    https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @downloadURL  https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @description  try to take over the world!
@@ -17,7 +17,7 @@
     (function() {
         console.log("Starting"); //debug
         var href,
-			reloadtime = 0.5,
+			reloadtime = 0.8,
 			backtohome = false,
             investoren = [
                 'a.btn60:contains("Belohnung abholen!")',
@@ -27,7 +27,7 @@
                 'a.btn60:contains("Ja, das ist es!")',
                 'a.btn60:contains("Ja, die haben wir!")',
                 'a.btn60:contains("Ja, können wir!")',
-                'a.btn60:contains("Wir sind die besten!")',
+                'a.btn60:contains("Wir sind die besten!")'
             ],
             actions = [
                 'span.flr a[href="lobby"]',
@@ -52,7 +52,7 @@
                 'a.tdu:contains("In Etage")',
                 'a[href="quests"]',
                 'a[href*="toolbarPanel:guildBoxQuestAward::ILinkListener::"]',
-                'a.btn60:contains("Aktualisieren")',
+                'a.btn60:contains("Aktualisieren")'
             ];
 
         for(var i = 0; !href && i < investoren.length; i++) {
@@ -69,7 +69,7 @@
             if(query2.length) {
 				console.log("I want to click: ", actions[j], query2[0].href); //debug
 				href = query2[0].href;
-				if (investoren[i].indexOf('Aktualisieren') >= 0) {
+				if (actions[j].indexOf('Aktualisieren') >= 0) {
 					backtohome = true;
 				}
             }
