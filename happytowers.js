@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Happy Towers
 // @namespace    Happy Towers - magic
-// @version      0.3.5
+// @version      0.3.7
 // @updateURL    https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @downloadURL  https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @description  try to take over the world!
@@ -17,11 +17,10 @@
     (function() {
         console.log("Starting"); //debug
         var href,
-			reloadtime = 1,
+			reloadtime = 0.5,
 			backtohome = false,
-			investorenclick = false,
-			actionclick = false,
             investoren = [
+                'a.btn60:contains("Belohnung abholen!")',
                 'a.btn60:contains("Verhandlungen beginnen")',
                 'a.btn60:contains("Ja ist es!")',
                 'a.btn60:contains("Ja, natürlich!")',
@@ -29,10 +28,8 @@
                 'a.btn60:contains("Ja, die haben wir!")',
                 'a.btn60:contains("Ja, können wir!")',
                 'a.btn60:contains("Wir sind die besten!")',
-                'a.btn60:contains("Aktualisieren")',
             ],
             actions = [
-                'a:contains("Belohnung abholen")',
                 'span.flr a[href="lobby"]',
                 'span.flr a[href="city/coll"]',
                 'span.flr a[href="city/box/quests"]',
@@ -50,33 +47,31 @@
                 'a.tdu:contains("Große Eröffnung!")',
                 'a:contains("Schneebälle")',
                 'a:contains("Wurf")',
+                'a:contains("Belohnung abholen!")',
                 'a.tdu:contains("Einen Besucher befördern")',
                 'a.tdu:contains("In Etage")',
                 'a[href="quests"]',
                 'a[href*="toolbarPanel:guildBoxQuestAward::ILinkListener::"]',
+                'a.btn60:contains("Aktualisieren")',
             ];
 
         for(var i = 0; !href && i < investoren.length; i++) {
             var query = $(investoren[i]);
-			investorenclick = false;
             if(query.length) {
                 console.log("I want to investoren click: ", investoren[i], query[0].href); //debug
                 href = query[0].href;
-				investorenclick = true;
 				reloadtime = 6;
-				if (investoren[i].indexOf('Aktualisieren') >= 0) {
-					backtohome = true;
-				}
             }
         }
 
-        for(var i = 0; !href && i < actions.length; i++) {
-            var query = $(actions[i]);
-			actionclick = false;
-            if(query.length) {
-				console.log("I want to click: ", actions[i], query[0].href); //debug
-				href = query[0].href;
-				actionclick = true;
+        for(var j = 0; !href && j < actions.length; j++) {
+            var query2 = $(actions[j]);
+            if(query2.length) {
+				console.log("I want to click: ", actions[j], query2[0].href); //debug
+				href = query2[0].href;
+				if (investoren[i].indexOf('Aktualisieren') >= 0) {
+					backtohome = true;
+				}
             }
         }
 
@@ -87,19 +82,19 @@
             }, reloadtime * 1000);
 
         } else {
-            var rand = Math.floor((Math.random() * 271) + 30 * 1000);
+            var rand = Math.floor(((Math.random() * 271) + 30) * 1000);
             var today = new Date();
             console.log('Now: ' + converttotime(today));
 
             var nextreload = new Date(today);
-            nextreload.setSeconds(nextreload.getSeconds() + rand);
+            nextreload.setMilliseconds(nextreload.getMilliseconds() + rand);
 
             var h = today.getHours();
             var d = addZero(today.getDate());
             var mm = addZero(today.getMonth());
             var y = today.getFullYear();
 
-            if (h == 1) {
+            if (h == 0) {
                 nextreload = new Date(y, mm, d, 6, 0, 30);
                 rand = nextreload - today.getTime();
             }
@@ -108,7 +103,7 @@
             console.log('Next reload: ' + converttotime(nextreload));
 
             setTimeout(function() {
-                tohome();
+                tolink(0, true);
             }, Math.floor(rand));
 			get_time_diff();
         }
@@ -124,11 +119,12 @@ function get_time_diff() {
 
     var now = new Date().getTime();
     var reloadtime1 = new Date(y, mm, d, 20, 30, 30);
+    var reloadtime2;
 
     if (n == -60) {
-        var reloadtime2 = new Date(y, mm, d, 22, 0, 30);
+        reloadtime2 = new Date(y, mm, d, 22, 0, 30);
     } else if (n == -120) {
-        var reloadtime2 = new Date(y, mm, d, 23, 0, 30);
+        reloadtime2 = new Date(y, mm, d, 23, 0, 30);
     }
 
 
@@ -158,15 +154,11 @@ function get_time_diff() {
 
 function tolink(href, backtohome) {
 	if (backtohome) {
-		tohome();
+		window.location.href="http://happytowers.de/home";
 	}
     else {
         window.location.href = href;
     }
-}
-
-function tohome() {
-    window.location.href="http://happytowers.de/home";
 }
 
 function converttotime(time) {
