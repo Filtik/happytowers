@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Happy Towers
 // @namespace    Happy Towers - magic
-// @version      0.3.8
+// @version      0.3.9
 // @updateURL    https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
 // @downloadURL  https://raw.githubusercontent.com/Filtik/happytowers/master/happytowers.js
-// @description  try to take over the world!
+// @description  To my HappyTowers best!
 // @author       Filtik
 // @grant        none
 
@@ -17,7 +17,7 @@
     (function() {
         console.log("Starting"); //debug
         var href,
-			reloadtime = 0.8,
+			reloadtime = 0.5,
 			backtohome = false,
             investoren = [
                 'a.btn60:contains("Belohnung abholen!")',
@@ -52,7 +52,8 @@
                 'a.tdu:contains("In Etage")',
                 'a[href="quests"]',
                 'a[href*="toolbarPanel:guildBoxQuestAward::ILinkListener::"]',
-                'a.btn60:contains("Aktualisieren")'
+                'a.btn60:contains("Aktualisieren")',
+				'a.btng:contains("Akzeptieren")',
             ];
 
         for(var i = 0; !href && i < investoren.length; i++) {
